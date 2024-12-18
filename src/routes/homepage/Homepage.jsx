@@ -74,6 +74,16 @@ const Homepage = () => {
           <span>|</span>
           <Link to="/">Privacy Policy</Link>
         </div>
+        <p>
+          Designed with ❤️ by{" "}
+          <a
+            href="https://github.com/yuvrajraghuvanshi"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Yuvraj
+          </a>
+        </p>
       </div>
     </div>
   );
