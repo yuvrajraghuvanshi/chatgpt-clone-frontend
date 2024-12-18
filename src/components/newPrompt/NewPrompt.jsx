@@ -5,6 +5,7 @@ import { IKImage } from "imagekitio-react";
 import model from "../../lib/gemini";
 import Markdown from "react-markdown";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useAuth } from "@clerk/clerk-react";
 
 const NewPrompt = ({ data }) => {
   const [question, setQuestion] = useState("");
@@ -34,13 +35,15 @@ const NewPrompt = ({ data }) => {
   }, [data, question, answer, img.dbData]);
 
   const queryClient = useQueryClient();
-
+const {getToken}=useAuth()
   const mutation = useMutation({
-    mutationFn: () => {
+    mutationFn: async() => {
+      const token = await getToken();
       return fetch(`${import.meta.env.VITE_API_URL}/api/chats/${data._id}`, {
         method: "PUT",
         credentials: "include",
         headers: {
+          "Authorization":`Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({

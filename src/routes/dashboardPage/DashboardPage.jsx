@@ -1,9 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import "./dashboardPage.css";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@clerk/clerk-react";
+import { useState } from "react";
 
 const DashboardPage = () => {
   const queryClient = useQueryClient();
+  const { getToken } = useAuth(); 
+  const [token,setToken]=useState("")
 
   const navigate = useNavigate();
 
@@ -13,6 +17,7 @@ const DashboardPage = () => {
         method: "POST",
         credentials: "include",
         headers: {
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ text }),
@@ -26,6 +31,8 @@ const DashboardPage = () => {
   });
 
   const handleSubmit = async (e) => {
+    const token=await getToken()
+    setToken(token)
     e.preventDefault();
     const text = e.target.text.value;
     if (!text) return;
