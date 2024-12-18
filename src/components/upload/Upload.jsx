@@ -11,7 +11,7 @@ const authenticator = async () => {
     if (!response.ok) {
       const errorText = await response.text();
       throw new Error(
-        `Request failed with status code ${response.status}: ${errorText}`
+        `Request failed with status ${response.status}: ${errorText}`
       )
     }
 
